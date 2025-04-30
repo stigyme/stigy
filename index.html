@@ -39,17 +39,7 @@
             inset: 0;
             z-index: -1;
             display: block;
-         }
-        .fade-bottom {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 40%;
-        z-index: -1;
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000000 100%);
-        pointer-events: none;
-        }
+      }
         .gradient-text {
             background: linear-gradient(90deg, #a855f7, #fff);
             -webkit-background-clip: text;
@@ -191,7 +181,6 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4 bg-black-100 bg-[url(/123.webp)] bg-blend-multiply bg-no-repeat bg-cover backdrop-blur-sm">
     <canvas id="bgCanvas"></canvas>
-    <div class="fade-bottom"></div>
     <div class="max-w-2xl w-full mx-auto text-center z-10 justify-center">
         <!-- Header with animated title -->
         <header class="mb-8 text-center">
@@ -288,60 +277,56 @@
         ;
     </script>
 
-    <script>
-        const canvas = document.getElementById("bgCanvas");
-        const ctx = canvas.getContext("2d");
+       <script>
+    const canvas = document.getElementById("bgCanvas");
+    const ctx = canvas.getContext("2d");
 
-        function resizeCanvas() {
-        const dpr = window.devicePixelRatio || 1;
-        canvas.width = window.innerWidth * dpr;
-        canvas.height = window.innerHeight * dpr;
-        canvas.style.width = `${window.innerWidth}px`;
-        canvas.style.height = `${window.innerHeight}px`;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    const cols = 150; // número de colunas (partículas por linha)
+    const rows = 50;  // número de linhas (número de ondas)
+    const spacingX = canvas.width / cols;
+    const spacingY = canvas.height / rows;
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const time = Date.now() * 0.002;
+
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          const px = x * spacingX;
+          const py = y * spacingY;
+
+          const wave = Math.sin(x * 0.15 + time + y * 0.2) * 10;
+
+          const finalY = py + wave;
+
+          const pulse = (Math.sin(time + x * 0.1 + y * 0.2) + 1) * 0.4;
+          const opacity = 0 + pulse * 0.3;
+
+          const usePurple = (x + y) % 2 === 0;
+          const color = usePurple
+            ? `rgba(198, 174, 252, ${opacity})`
+            : `rgba(255, 255, 255, ${opacity})`;
+
+          ctx.beginPath();
+          ctx.arc(px, finalY, 1.2 + pulse * 0.8, 0, Math.PI * 2);
+          ctx.fillStyle = color;
+          ctx.fill();
         }
+      }
 
-        window.addEventListener("resize", resizeCanvas);
-        window.addEventListener("orientationchange", resizeCanvas);
-        resizeCanvas();
+      requestAnimationFrame(draw);
+    }
 
-        const cols = 150;
-        const rows = 50;
-
-        function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        const time = Date.now() * 0.002;
-        const spacingX = canvas.width / cols;
-        const spacingY = canvas.height / rows;
-
-        for (let y = 0; y < rows; y++) {
-            for (let x = 0; x < cols; x++) {
-            const px = x * spacingX;
-            const py = y * spacingY;
-
-            const wave = Math.sin(x * 0.15 + time + y * 0.2) * 10;
-            const finalY = py + wave;
-
-            const pulse = (Math.sin(time + x * 0.1 + y * 0.2) + 1) * 0.5;
-            const opacity = 0.2 + pulse * 0.5;
-
-            const usePurple = (x + y) % 2 === 0;
-            const color = usePurple
-                ? `rgba(198, 174, 252, ${opacity})`
-                : `rgba(255, 255, 255, ${opacity})`;
-
-            ctx.beginPath();
-            ctx.arc(px, finalY, 1.2 + pulse * 0.8, 0, Math.PI * 2);
-            ctx.fillStyle = color;
-            ctx.fill();
-            }
-        }
-
-        requestAnimationFrame(draw);
-        }
-
-        draw();
+    draw();
   </script>
 </body>
 </html>
