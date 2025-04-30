@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Partículas Ellipse</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      body, html {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-      }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logo.png" type="image/x-icon"/>
+    <meta name="description" content="Ouça os lançamentos de StiGy. Tech House, Melodic Techno e Deep House com batidas envolventes e atmosferas profundas. Acesse todos os links e novidades aqui." />
+    <meta name="keywords" content="DJ Tech House, DJ Melodic Techno, DJ Deep House, DJ stigy, música eletrônica, produtores de música eletrônica, Spotify DJ, SoundCloud DJ" />
+    <meta name="author" content="StiGy" />
 
-      canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: -1;
-      }
+        <!-- Open Graph (Facebook/Instagram/etc.) -->
+    <meta property="og:title" content="StiGy | Tech House & Melodic Techno" />
+    <meta property="og:description" content="Descubra os lançamentos e links oficiais de DJ [Seu Nome], especializado em Tech House, Melodic Techno e Deep House." />
+    <meta property="og:image" content="https://postimg.cc/RNhSZt5t" />
+    <meta property="og:url" content="https://stigyme.github.io/stigy/" />
+    <meta property="og:type" content="music.musician" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="StiGy | Tech House & Melodic Techno" />
+    <meta name="twitter:description" content="Ouça agora as produções mais recentes de DJ [Seu Nome]!" />
+    <meta name="twitter:image" content="https://postimg.cc/RNhSZt5t" />
+
+    <title>StiGy | DJ Producer | Official Site</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #0a0a0a;
@@ -25,6 +34,12 @@
             overflow-x: hidden;
         }
         
+        canvas {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            display: block;
+      }
         .gradient-text {
             background: linear-gradient(90deg, #a855f7, #fff);
             -webkit-background-clip: text;
@@ -163,11 +178,9 @@
             z-index: -1;
         }
     </style>
-  </head>
-  <body class="bg-black">
-
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 bg-black-100 bg-[url(/123.webp)] bg-blend-multiply bg-no-repeat bg-cover backdrop-blur-sm">
     <canvas id="bgCanvas"></canvas>
-
     <div class="max-w-2xl w-full mx-auto text-center z-10 justify-center">
         <!-- Header with animated title -->
         <header class="mb-8 text-center">
@@ -234,54 +247,86 @@
                 <p class="text-purple-200 text-sm">Music videos</p>
             </a>
         </div>
-
-    <script>
-      const canvas = document.getElementById("bgCanvas");
-      const ctx = canvas.getContext("2d");
-
-      function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
-
-      window.addEventListener("resize", resizeCanvas);
-      resizeCanvas();
-
-      const rings = 25;
-      const dotsPerRing = 120;
-      const maxRadius = Math.min(window.innerWidth, window.innerHeight) * 0.6;
-
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const centerX = canvas.width / 2;
-        const centerY = canvas.height / 2;
-
-        for (let r = 0; r < rings; r++) {
-          const baseRadius = (r / rings) * maxRadius;
-          for (let i = 0; i < dotsPerRing; i++) {
-            const angle = (i / dotsPerRing) * Math.PI * 2;
-
-            // Elipse achatada (reduzimos o eixo Y)
-            const x = centerX + baseRadius * Math.cos(angle);
-            const y = centerY + baseRadius * 0.4 * Math.sin(angle);
-
-            const pulse = Math.sin(Date.now() * 0.001 + r * 0.4) * 0.5 + 0.5;
-
-            // Menos brilho no centro (baseado no raio)
-            const distanceFactor = baseRadius / maxRadius;
-            const opacity = 0.1 + pulse * 0.5 * distanceFactor;
-
-            ctx.beginPath();
-            ctx.arc(x, y, 1 + pulse * 0.8, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255,255,255,${opacity})`;
-            ctx.fill();
-          }
-        }
-
-        requestAnimationFrame(draw);
-      }
-
-      draw();
+        
+       
+    
+    <script>           
+            // Add interactive mouse effect
+            document.addEventListener('mousemove', function(e) {
+                const particles = document.querySelectorAll('.particle');
+                particles.forEach(particle => {
+                    const x = e.clientX / window.innerWidth;
+                    const y = e.clientY / window.innerHeight;
+                    
+                    // Move particles slightly away from mouse
+                    const particleX = parseFloat(particle.style.left) / 100 * window.innerWidth;
+                    const particleY = parseFloat(particle.style.top) / 100 * window.innerHeight;
+                    
+                    const dx = e.clientX - particleX;
+                    const dy = e.clientY - particleY;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 150) {
+                        const force = (150 - distance) / 150 * 5;
+                        const angle = Math.atan2(dy, dx);
+                        
+                        particle.style.transform = `translate(${Math.cos(angle) * force}px, ${Math.sin(angle) * force}px)`;
+                    }
+                });
+            });
+        ;
     </script>
-  </body>
+
+       <script>
+    const canvas = document.getElementById("bgCanvas");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    const cols = 150; // número de colunas (partículas por linha)
+    const rows = 50;  // número de linhas (número de ondas)
+    const spacingX = canvas.width / cols;
+    const spacingY = canvas.height / rows;
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const time = Date.now() * 0.002;
+
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          const px = x * spacingX;
+          const py = y * spacingY;
+
+          const wave = Math.sin(x * 0.15 + time + y * 0.2) * 10;
+
+          const finalY = py + wave;
+
+          const pulse = (Math.sin(time + x * 0.1 + y * 0.2) + 1) * 0.4;
+          const opacity = 0 + pulse * 0.3;
+
+          const usePurple = (x + y) % 2 === 0;
+          const color = usePurple
+            ? `rgba(198, 174, 252, ${opacity})`
+            : `rgba(255, 255, 255, ${opacity})`;
+
+          ctx.beginPath();
+          ctx.arc(px, finalY, 1.2 + pulse * 0.8, 0, Math.PI * 2);
+          ctx.fillStyle = color;
+          ctx.fill();
+        }
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+</body>
 </html>
