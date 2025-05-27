@@ -205,7 +205,7 @@
            <a href="https://soundcloud.com/stigymusic/stigy-for-the-weekend-remix-free-download">
             <img src="ftw.webp" class="animate-slide-up"/>
            </a>
-           <h2 class="fade-up text-white font-medium text-2xl mt-20">Me siga na sua plataforma preferida:</h2>           
+           <h2 class="fade-up text-white font-medium text-2xl mt-20">Me siga no seu streaming de música preferido:</h2>           
         
         <!-- Music Platforms -->
          <div class="mt-10 grid lg-grid-cols-3 gap-6 mb-20">
@@ -235,34 +235,5 @@
             YOUTUBE
             </a>
         </div>
-       
-    
-    <script>           
-            // Add interactive mouse effect
-            document.addEventListener('mousemove', function(e) {
-                const particles = document.querySelectorAll('.particle');
-                particles.forEach(particle => {
-                    const x = e.clientX / window.innerWidth;
-                    const y = e.clientY / window.innerHeight;
-                    
-                    // Move particles slightly away from mouse
-                    const particleX = parseFloat(particle.style.left) / 100 * window.innerWidth;
-                    const particleY = parseFloat(particle.style.top) / 100 * window.innerHeight;
-                    
-                    const dx = e.clientX - particleX;
-                    const dy = e.clientY - particleY;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < 150) {
-                        const force = (150 - distance) / 150 * 5;
-                        const angle = Math.atan2(dy, dx);
-                        
-                        particle.style.transform = `translate(${Math.cos(angle) * force}px, ${Math.sin(angle) * force}px)`;
-                    }
-                });
-            });
-        ;
-    </script>
-
 </body>
 </html>
