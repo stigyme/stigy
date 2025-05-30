@@ -202,38 +202,54 @@
         </header>
         
         <!-- YouTube Player -->
+         
            <a href="https://soundcloud.com/stigymusic/stigy-for-the-weekend-remix-free-download">
-            <img src="ftw.webp" class="animate-slide-up"/>
+            <img src="ftw.webp" class="animate-slide-up hover:scale-125"/>
            </a>
-           <h2 class="fade-up text-white font-medium text-2xl mt-20">Me siga no seu streaming de música preferido:</h2>           
+           <h2 class="fade-up text-white font-medium text-2xl mt-20">Me siga na sua plataforma preferida:</h2>           
         
         <!-- Music Platforms -->
-         <div class="mt-10 grid lg-grid-cols-3 gap-6 mb-20">
-            <a href="https://open.spotify.com/intl-pt/artist/541OT8YFM6J9zezRlevkqK?si=sYhegqWrQ5izWWCtm0H5Dg"
-            class="fade-up inline-block px-6 py-3 rounded-xl bg-gradient-to-r from-[#0f0c29] via-[#302b63] to-[#24243e]
-            text-white font-semibold text-lg shadow-lg transition-all duration-300 ease-in-out
-            transform hover:-translate-y-1 hover:shadow-xl"
-            >
-            SPOTIFY
-            </a>
-            
-            <!-- SoundCloud -->
-             <a href="https://soundcloud.com/stigymusic"
-            class="px-6 py-3 rounded-xl bg-gradient-to-r from-[#0f0c29] via-[#302b63] to-[#24243e]
-                    text-white font-semibold text-lg shadow-lg hover:-translate-y-1 hover:shadow-xl
-                    transition-all duration-300 ease-in-out opacity-0 animate-[fadeUp_0.8s_ease-out_forwards]"
-            >
-            SOUNDCLOUD
-            </a>
-            
-            <!-- YouTube -->
-            <a href="https://www.youtube.com/@stigyme"
-            class="px-6 py-3 rounded-xl bg-gradient-to-r from-[#0f0c29] via-[#302b63] to-[#24243e]
-                    text-white font-semibold text-lg shadow-lg hover:-translate-y-1 hover:shadow-xl
-                    transition-all duration-300 ease-in-out opacity-0 animate-[fadeUp_0.8s_ease-out_forwards]"
-            >
-            YOUTUBE
-            </a>
-        </div>
+
+        <a href="https://open.spotify.com/intl-pt/artist/541OT8YFM6J9zezRlevkqK?si=sYhegqWrQ5izWWCtm0H5Dg">
+            <img src="spotify.webp" class="animate-slide-up"/>
+        </a>
+        
+        <a href="https://www.youtube.com/@stigyme">
+            <img src="youtube.webp" class="animate-slide-up"/>
+        </a>
+       
+
+        <a href="https://soundcloud.com/stigymusic">
+            <img src="soundcloud.webp" class="animate-slide-up"/>
+        </a>
+
+    
+    <script>           
+            // Add interactive mouse effect
+            document.addEventListener('mousemove', function(e) {
+                const particles = document.querySelectorAll('.particle');
+                particles.forEach(particle => {
+                    const x = e.clientX / window.innerWidth;
+                    const y = e.clientY / window.innerHeight;
+                    
+                    // Move particles slightly away from mouse
+                    const particleX = parseFloat(particle.style.left) / 100 * window.innerWidth;
+                    const particleY = parseFloat(particle.style.top) / 100 * window.innerHeight;
+                    
+                    const dx = e.clientX - particleX;
+                    const dy = e.clientY - particleY;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 150) {
+                        const force = (150 - distance) / 150 * 5;
+                        const angle = Math.atan2(dy, dx);
+                        
+                        particle.style.transform = `translate(${Math.cos(angle) * force}px, ${Math.sin(angle) * force}px)`;
+                    }
+                });
+            });
+        ;
+    </script>
+
 </body>
 </html>
